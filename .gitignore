@@ -1,0 +1,8 @@
+/validate_m2_package.php
+/app/code/Targetpay/Ideal/*.zip
+/app/code/Targetpay/Mrcash/*.zip
+/app/code/Targetpay/Paysafecard/*.zip
+/app/code/Targetpay/Sofort/*.zip
+/.idea
+/.settings/
+/.project
