@@ -271,7 +271,7 @@ class DSofort extends \Magento\Payment\Model\Method\AbstractMethod
             $this->urlBuilder->getUrl('dsofort/dsofort/return', ['_secure' => true, 'order_id' => $orderId])
         );
         $digiCore->setReportUrl(
-            $this->urlBuilder->getUrl('dsofort/dsofort/report', ['_secure' => true, 'order_id' => $orderId])
+            $this->urlBuilder->getUrl('dsofort/dsofort/report', ['_secure' => true, 'order_id' => $orderId, 'ajax' => 1])
         );
         
         $bankUrl = @$digiCore->startPayment();

@@ -12,6 +12,10 @@ use Digiwallet\DAfterpay\Controller\DAfterpayValidationException;
  */
 class ReturnAction extends DAfterpayBaseAction
 {
+    /**
+     * @var \Magento\Sales\Api\OrderManagementInterface
+     */
+    private $orderManagement;
 
     /**
      *
@@ -25,6 +29,8 @@ class ReturnAction extends DAfterpayBaseAction
      * @param \Digiwallet\DAfterpay\Model\DAfterpay $dafterpay
      * @param \Magento\Sales\Api\TransactionRepositoryInterface $transactionRepository
      * @param \Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface $transactionBuilder
+     * @param \Magento\Sales\Model\Order\Email\Sender\InvoiceSender $invoiceSender
+     * @param \Magento\Sales\Api\OrderManagementInterface $orderManagement
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -38,9 +44,13 @@ class ReturnAction extends DAfterpayBaseAction
         \Digiwallet\DAfterpay\Model\DAfterpay $dafterpay,
         \Magento\Checkout\Model\Session $checkoutSession,
         \Magento\Sales\Api\TransactionRepositoryInterface $transactionRepository,
-        \Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface $transactionBuilder
+        \Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface $transactionBuilder,
+        \Magento\Sales\Model\Order\Email\Sender\InvoiceSender $invoiceSender,
+        \Magento\Sales\Api\OrderManagementInterface $orderManagement
     ) {
-        parent::__construct($context, $resourceConnection, $localeResolver, $scopeConfig, $transaction, $transportBuilder, $order, $dafterpay, $checkoutSession, $transactionRepository, $transactionBuilder);
+        parent::__construct($context, $resourceConnection, $localeResolver, $scopeConfig, $transaction,
+            $transportBuilder, $order, $dafterpay, $checkoutSession, $transactionRepository, $transactionBuilder, $invoiceSender);
+        $this->orderManagement = $orderManagement;
     }
 
     /**
@@ -91,6 +101,14 @@ class ReturnAction extends DAfterpayBaseAction
                     foreach ($errors->getErrorItems() as $message) {
                         $this->messageManager->addExceptionMessage(new \Exception(), __((is_array($message)) ? implode(", ", $message) : $message));
                     }
+                }
+                try{
+                    $orderIdentityId = $this->checkoutSession->getLastRealOrder()->getId();
+                    if(!empty($orderIdentityId)) {
+                        $this->orderManagement->cancel($orderIdentityId);
+                    }
+                } catch (\Exception $exception) {
+                    // Do nothing
                 }
                 $this->checkoutSession->restoreQuote();
                 $this->_redirect('checkout/cart', [

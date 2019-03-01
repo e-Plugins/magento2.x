@@ -12,6 +12,16 @@ use Digiwallet\DSofort\Controller\DSofortBaseAction;
 class ReturnAction extends DSofortBaseAction
 {
     /**
+     * @var \Magento\Sales\Api\OrderManagementInterface
+     */
+    private $orderManagement;
+
+    /**
+     * @var \Magento\Framework\App\Action\Context
+     */
+    private $context;
+
+    /**
      * @var \Magento\Checkout\Model\Session
      */
     private $checkoutSession;
@@ -28,6 +38,8 @@ class ReturnAction extends DSofortBaseAction
      * @param \Magento\Sales\Api\TransactionRepositoryInterface $transactionRepository
      * @param \Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface $transactionBuilder
      * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param \Magento\Sales\Model\Order\Email\Sender\InvoiceSender $invoiceSender
+     * @param \Magento\Sales\Api\OrderManagementInterface $orderManagement
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -41,10 +53,15 @@ class ReturnAction extends DSofortBaseAction
         \Digiwallet\DSofort\Model\DSofort $dsofort,
         \Magento\Sales\Api\TransactionRepositoryInterface $transactionRepository,
         \Magento\Sales\Model\Order\Payment\Transaction\BuilderInterface $transactionBuilder,
-        \Magento\Checkout\Model\Session $checkoutSession
+        \Magento\Checkout\Model\Session $checkoutSession,
+        \Magento\Sales\Model\Order\Email\Sender\InvoiceSender $invoiceSender,
+        \Magento\Sales\Api\OrderManagementInterface $orderManagement
     ) {
-        parent::__construct($context, $resourceConnection, $localeResolver, $scopeConfig, $transaction, $transportBuilder, $order, $dsofort, $transactionRepository, $transactionBuilder);
+        parent::__construct($context, $resourceConnection, $localeResolver, $scopeConfig, $transaction,
+            $transportBuilder, $order, $dsofort, $transactionRepository, $transactionBuilder, $invoiceSender);
         $this->checkoutSession = $checkoutSession;
+        $this->context = $context;
+        $this->orderManagement = $orderManagement;
     }
 
     /**
@@ -78,6 +95,20 @@ class ReturnAction extends DSofortBaseAction
         if ($result) {
             $this->_redirect('checkout/onepage/success', ['_secure' => true]);
         } else {
+            try{
+                $orderIdentityId = $this->checkoutSession->getLastRealOrder()->getId();
+                if(!empty($this->errorMessage)) {
+                    $this->context->getMessageManager()->addErrorMessage($this->errorMessage);
+                    $this->checkoutSession->getLastRealOrder()->addStatusHistoryComment($this->errorMessage);
+                    $this->checkoutSession->getLastRealOrder()->save();
+                }
+                if(!empty($orderIdentityId)) {
+                    $this->orderManagement->cancel($orderIdentityId);
+                }
+            } catch (\Exception $exception) {
+                // Do nothing
+            }
+            // Restore latest Cart data
             $this->checkoutSession->restoreQuote();
             return $resultRedirect->setPath('checkout/cart');
         }

@@ -229,7 +229,7 @@ class DBankwire extends \Magento\Payment\Model\Method\AbstractMethod
             $this->urlBuilder->getUrl('dbankwire/dbankwire/return', ['_secure' => true, 'order_id' => $orderId])
         );
         $digiCore->setReportUrl(
-            $this->urlBuilder->getUrl('dbankwire/dbankwire/report', ['_secure' => true, 'order_id' => $orderId])
+            $this->urlBuilder->getUrl('dbankwire/dbankwire/report', ['_secure' => true, 'order_id' => $orderId, 'ajax' => 1])
         );
         
         $digiCore->bindParam('salt', $this->salt);

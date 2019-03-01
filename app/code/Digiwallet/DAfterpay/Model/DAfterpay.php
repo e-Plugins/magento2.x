@@ -391,7 +391,8 @@ class DAfterpay extends \Magento\Payment\Model\Method\AbstractMethod
         ]));
         $digiCore->setReportUrl($this->urlBuilder->getUrl('dafterpay/dafterpay/report', [
             '_secure' => true,
-            'order_id' => $orderId
+            'order_id' => $orderId,
+            'ajax' => 1
         ]));
 
         $this->return_url = $digiCore->getReturnUrl();

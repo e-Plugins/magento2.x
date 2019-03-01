@@ -227,7 +227,7 @@ class DBancontact extends \Magento\Payment\Model\Method\AbstractMethod
             $this->urlBuilder->getUrl('dbancontact/dbancontact/return', ['_secure' => true, 'order_id' => $orderId])
         );
         $digiCore->setReportUrl(
-            $this->urlBuilder->getUrl('dbancontact/dbancontact/report', ['_secure' => true, 'order_id' => $orderId])
+            $this->urlBuilder->getUrl('dbancontact/dbancontact/report', ['_secure' => true, 'order_id' => $orderId, 'ajax' => 1])
         );
         
         $bankUrl = @$digiCore->startPayment();
