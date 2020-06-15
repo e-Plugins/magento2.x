@@ -2,7 +2,7 @@
 
 ## Usage
 Use this plugin to add support for iDEAL, Mister Cash, Sofort and other payment methods of 
-Digiwallet.com and Digiwallet.nl to your webstore. 
+Digiwallet to your webstore. 
 
 ## Supported Paymethods
 | Paymethod	|   supported	| 
@@ -26,7 +26,7 @@ Before you can use the plugin, please sign up for a Digiwallet account on www.di
 Note that the plugin can be used in a live environment only after it has been completed with your details and
 is approved by their compliance department. This would normally take about one working day. 
 
-You can obtain a personalized version of the plugin on https://www.idealplugins.nl/
+You can obtain a personalized version of the plugin on https://www.e-plugins.nl/plugin/magento2
 
 ### 2. Download or clone this repository
 
@@ -34,7 +34,7 @@ We recommend cloning the repository so you can easily get updates.
 
 ### 3. Setting up
 
-NOTE: If you installed the old Targetpay plugin before, please make sure to remove this first before proceeding with this new plugin, since the old plugin is not backwards compatible with the previous version.
+NOTE: If you installed the old DigiWallet plugin before, please make sure to remove this first before proceeding with this new plugin, since the old plugin is not backwards compatible with the previous version.
 
 
 	How to setup:
@@ -69,11 +69,11 @@ NOTE: If you installed the old Targetpay plugin before, please make sure to remo
 	The Newly installed methods will be there
 	Enable them and check/uncheck test mode for testing
 
-More detailed installation instruction are avialable on https://www.idealplugins.nl/magento2#tab_install
+More detailed installation instruction are avialable on https://www.e-plugins.nl/magento2#tab_install
 
 ## Troubleshooting
 
-Please see the FAQ on https://www.idealplugins.nl/magento2#tab_help
+Please see the FAQ on https://www.e-plugins.nl/magento2#tab_help
 
 ## Magento 1.x
 
