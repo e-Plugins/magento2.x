@@ -1,4 +1,4 @@
-# iDEAL plugin for Magento 2.x
+# DigiWallet plugin for Magento 2.x
 
 ## Usage
 Use this plugin to add support for iDEAL, Mister Cash, Sofort and other payment methods of 
@@ -12,6 +12,8 @@ Digiwallet to your webstore.
 | Creditcard	|:heavy_check_mark:	|
 | Paysafecard	|:heavy_check_mark:	|
 | Sofort	|:heavy_check_mark:	|
+| GiroPay	|:heavy_check_mark:	|
+| EPS	|:heavy_check_mark:	|
 | Paypal	|:heavy_check_mark:	|
 | Afterpay	|:heavy_check_mark:	|
 | Bankwire	|:heavy_check_mark:	|
