@@ -1,7 +1,7 @@
-# DigiWallet plugin for Magento 2.x
-
-## Usage
-Use this plugin to add support for iDEAL, Mister Cash, Sofort and other payment methods of 
+#  DigiWallet plugin for Magento 2.x
+## Tested up to Magento 2.4.6, PHP8.1
+### Usage
+Use this plugin to add support for iDEAL, Bancontact, Sofort and other payment methods of 
 DigiWallet to your webstore. 
 
 ## Supported Paymethods
@@ -43,7 +43,7 @@ NOTE: If you installed the old DigiWallet plugin before, please make sure to rem
 
 	1. Extract the attachment zip into app/code
 
-	The path will be: app/code/Digiwallet/Ideal or app/code/Digiwallet/Mrcash, ...
+	The path will be: app/code/Digiwallet/Ideal or app/code/Digiwallet/Bancontact, ...
 
 	2. Install new module using the following commands:
 
